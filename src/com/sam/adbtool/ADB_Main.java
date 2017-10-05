@@ -16,7 +16,6 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.wb.swt.SWTResourceManager;
 
 public class ADB_Main {
 
@@ -144,6 +143,7 @@ public class ADB_Main {
 		});
 
 		btn2.addSelectionListener(new SelectionAdapter() {
+			@SuppressWarnings("unused")
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				System.out.println("Button 2 Called!");
@@ -189,7 +189,7 @@ public class ADB_Main {
 					if (listString != null) {
 						tx1.setText(listString);
 					} else {
-						tx1.setText("String Null... ");
+						tx1.setText("None File... ");
 					}
 
 				} catch (IOException e1) {
@@ -200,6 +200,7 @@ public class ADB_Main {
 		});
 
 		btn3.addSelectionListener(new SelectionAdapter() {
+			@SuppressWarnings("unused")
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				System.out.println("Button 3 Called!");
@@ -238,9 +239,9 @@ public class ADB_Main {
 						// 若需執行結果可將input傳出
 						System.out.println(input);
 						if (listString != null) {
-							listString = listString + "\n" + input;
+							listString = listString + "\n" + input.replace("package:","");
 						} else {
-							listString = input;
+							listString = input.replace("package:","");
 						}
 					}
 					if (listString != null) {
@@ -286,6 +287,7 @@ public class ADB_Main {
 		});
 
 		btn6.addSelectionListener(new SelectionAdapter() {
+			@SuppressWarnings("unused")
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				System.out.println("Button 6 Called!");

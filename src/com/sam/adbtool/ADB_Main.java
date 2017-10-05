@@ -16,6 +16,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.wb.swt.SWTResourceManager;
 
 public class ADB_Main {
 
@@ -63,7 +64,7 @@ public class ADB_Main {
 
 		tx1 = new Text(shell, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
 		tx1.setText("This ADB Tool");
-		// tx1.setFont(SWTResourceManager.getFont("微軟正黑體", 10, 0));
+		tx1.setFont(SWTResourceManager.getFont("微軟正黑體", 10, 0));
 		GridData gridData = new GridData(GridData.HORIZONTAL_ALIGN_FILL);
 		gridData.horizontalAlignment = SWT.CENTER;
 		gridData.verticalAlignment = SWT.CENTER;
@@ -149,7 +150,10 @@ public class ADB_Main {
 				System.out.println("Button 2 Called!");
 				tx1.setText(btn2.getText() + " Called!");
 
-				String path = FileOpem(shell);
+				FileOpenDialog fd = new FileOpenDialog(shell);
+
+				// String path = FileOpem(shell);
+				String path = fd.FileOpem();
 				tx1.setText(tx1.getText() + "\n" + path);
 
 				final String commandString;
@@ -239,9 +243,10 @@ public class ADB_Main {
 						// 若需執行結果可將input傳出
 						System.out.println(input);
 						if (listString != null) {
-							listString = listString + "\n" + input.replace("package:","");
+							listString = listString + "\n"
+									+ input.replace("package:", "");
 						} else {
-							listString = input.replace("package:","");
+							listString = input.replace("package:", "");
 						}
 					}
 					if (listString != null) {

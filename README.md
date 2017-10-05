@@ -7,3 +7,10 @@ This ADB GUI Tools for JAVA SWT
 操作上滿容易的，可以查看 Devices 以及安裝與卸載 apk
 而在操作(卸載)uninstall apk 時要先在 Text 上選擇
 完整的 packge 名稱如 com.example.apk 然後再選 uninstall apk
+
+使用的 IDE 環境是：
+
+Eclipse Java EE IDE for Web Developers.
+
+Version: Indigo Service Release 2
+Build id: 20120216-1857

@@ -87,7 +87,7 @@ public class ADB_Main {
 		btn4.setText("ADB Select Device");
 		btn4.setLayoutData(gridData2);
 		btn5 = new Button(shell, SWT.PUSH);
-		btn5.setText("Null");
+		btn5.setText("ADB Get Apk");
 		btn5.setLayoutData(gridData2);
 		btn6 = new Button(shell, SWT.PUSH);
 		btn6.setText("ADB Delete APP");
@@ -284,10 +284,102 @@ public class ADB_Main {
 		});
 
 		btn5.addSelectionListener(new SelectionAdapter() {
+			@SuppressWarnings("unused")
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				System.out.println("Button 5 Called!");
-				tx1.setText(btn5.getText() + " Called!");
+				// tx1.setText(btn5.getText() + " Called!");
+
+				String apkpath = tx1.getSelectionText();
+
+				if (apkpath == "") {
+					tx1.setText("None Select Apk Package!!");
+					return;
+				}
+
+				// adb shell pm path com.example.someapp
+				final String commandString;
+
+				if (stremulator != null) {
+					commandString = ".\\platform-tools\\adb.exe " + stremulator
+							+ "shell pm path " + apkpath;
+				} else {
+					commandString = ".\\platform-tools\\adb.exe "
+							+ "shell pm path " + apkpath;
+				}
+
+				try {
+					String listString = null;
+
+					Process process = Runtime.getRuntime().exec(commandString);
+
+					InputStream istream = process.getInputStream();
+
+					BufferedReader iReader = new BufferedReader(
+							new InputStreamReader(istream));
+
+					String input = iReader.readLine();
+
+					for (int i = 0; input != null; i++, input = iReader
+							.readLine()) {
+						// 若需執行結果可將input傳出
+						System.out.println(input);
+						if (listString != null) {
+							listString = listString + "\n"
+									+ input.replace("package:", "");
+						} else {
+							listString = input.replace("package:", "");
+						}
+					}
+					if (listString != null) {
+						tx1.setText(listString);
+
+						// adb pull /data/app/com.example.someapp-2.apk
+						// path/to/desired/destination
+						final String commandString2;
+
+						if (stremulator != null) {
+							commandString2 = ".\\platform-tools\\adb.exe "
+									+ stremulator + "pull " + listString;
+						} else {
+							commandString2 = ".\\platform-tools\\adb.exe "
+									+ "pull " + listString;
+						}
+
+						listString = null;
+
+						process = Runtime.getRuntime().exec(commandString2);
+
+						istream = process.getInputStream();
+
+						iReader = new BufferedReader(new InputStreamReader(
+								istream));
+
+						input = iReader.readLine();
+
+						for (int i = 0; input != null; i++, input = iReader
+								.readLine()) {
+							// 若需執行結果可將input傳出
+							System.out.println(input);
+							if (listString != null) {
+								listString = listString + "\n" + input;
+							} else {
+								listString = input;
+							}
+						}
+						if (listString != null) {
+							tx1.setText(listString);
+						} else {
+							tx1.setText("Please check whether the file directory has been copied apk ...!");
+						}
+
+					} else {
+						tx1.setText("String Null... ");
+					}
+
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
 			}
 		});
 

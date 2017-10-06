@@ -38,6 +38,17 @@ Downloads:
 <p><img alt="" src="5.png" width="640" height="480"></p>
 <p>然後會顯示出只有這關鍵字的 packges，用滑鼠將包裝名選擇後按下 &quot;ADB Delete APP&quot;</p>
 <p>就能夠完成移除 APP</p>
-<p>&nbsp;</p>
+<p><img alt="" src="6.png" width="640" height="480"></p>
+<p>新增功能 &quot;ADB Get Apk&quot;</p>
+<p><img src="7.png" width="640" height="480"></p>
+<p>先點選 ADB Filter APP</p>
+<p><img alt="" src="8.png" width="640" height="480"></p>
+<p>接著用滑鼠選擇要取得的 apk 完整包名再點選 &quot;ADB Get Apk&quot; 按鈕</p>
+<p><img alt="" src="9.png" width="640" height="480"></p>
+<p>完成取得 apk 了! 顯示出請檢查檔案目錄的提示</p>
+<p><img alt="" src="10.png" width="233" height="171"></p>
+<p>在檔案目錄底下已經有了剛剛選取得的 apk 了! </p>
+
+
 
               

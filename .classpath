@@ -3,8 +3,8 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk1.7.0_25"/>
 	<classpathentry kind="lib" path="libs/org.eclipse.core.commands_3.6.0.I20110111-0800.jar"/>
-	<classpathentry kind="lib" path="libs/org.eclipse.equinox.common_3.6.0.v20110523.jar"/>
-	<classpathentry kind="lib" path="libs/org.eclipse.jface_3.7.0.v20110928-1505.jar"/>
-	<classpathentry kind="lib" path="libs/swt.jar"/>
+	<classpathentry kind="lib" path="libs/org.eclipse.equinox.common_3.6.0.v20110523.jar" sourcepath="libs/org.eclipse.equinox.common.source_3.6.0.v20110523.jar"/>
+	<classpathentry kind="lib" path="libs/org.eclipse.jface_3.7.0.v20110928-1505.jar" sourcepath="libs/org.eclipse.jface.source_3.7.0.v20110928-1505.jar"/>
+	<classpathentry kind="lib" path="libs/swt.jar" sourcepath="libs/SWT_src.zip"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

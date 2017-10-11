@@ -16,6 +16,8 @@ import org.eclipse.wb.swt.SWTResourceManager;
 public class ADB_Main {
 
 	private static Display display;
+	private static Shell shell;
+
 	private static Text tx1;
 	private static Button btn1;
 	private static Button btn2;
@@ -102,7 +104,7 @@ public class ADB_Main {
 	public static void main(String[] args) {
 
 		display = new Display();
-		final Shell shell = new Shell(display);
+		shell = new Shell(display);
 
 		Initial_Displayer(shell);
 

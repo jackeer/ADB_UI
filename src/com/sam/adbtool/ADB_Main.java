@@ -1,10 +1,5 @@
 package com.sam.adbtool;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -28,6 +23,9 @@ public class ADB_Main {
 	private static Button btn4;
 	private static Button btn5;
 	private static Button btn6;
+	private static Button btn7;
+	private static Button btn8;
+	private static Button btn9;
 
 	static String stremulator = null;
 
@@ -46,13 +44,7 @@ public class ADB_Main {
 		return selected;
 	}
 
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-
-		display = new Display();
-		final Shell shell = new Shell(display);
+	static void Initial_Displayer(Shell shell) {
 		shell.setText("ADB Test Tool");
 
 		GridLayout gridLayout = new GridLayout();
@@ -60,7 +52,7 @@ public class ADB_Main {
 		gridLayout.makeColumnsEqualWidth = true;
 
 		shell.setLayout(gridLayout);
-		shell.setSize(640, 480);
+		shell.setSize(800, 600);
 
 		tx1 = new Text(shell, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
 		tx1.setText("This ADB Tool");
@@ -69,13 +61,14 @@ public class ADB_Main {
 		gridData.horizontalAlignment = SWT.CENTER;
 		gridData.verticalAlignment = SWT.CENTER;
 		gridData.horizontalSpan = 5;
-		gridData.widthHint = 600;
-		gridData.heightHint = 360;
+		gridData.widthHint = 760;
+		gridData.heightHint = 450;
 		tx1.setLayoutData(gridData);
+	}
 
-		GridData gridData2 = new GridData(GridData.HORIZONTAL_ALIGN_FILL);
+	static void Initial_Var(Shell shell, GridData gridData2) {
 		btn1 = new Button(shell, SWT.PUSH);
-		btn1.setText("ADB Devices");
+		btn1.setText("ADB Devices -l");
 		btn1.setLayoutData(gridData2);
 		btn2 = new Button(shell, SWT.PUSH);
 		btn2.setText("ADB Install APP");
@@ -92,9 +85,31 @@ public class ADB_Main {
 		btn6 = new Button(shell, SWT.PUSH);
 		btn6.setText("ADB Delete APP");
 		btn6.setLayoutData(gridData2);
+		btn7 = new Button(shell, SWT.PUSH);
+		btn7.setText("Button7");
+		btn7.setLayoutData(gridData2);
+		btn8 = new Button(shell, SWT.PUSH);
+		btn8.setText("Button8");
+		btn8.setLayoutData(gridData2);
+		btn9 = new Button(shell, SWT.PUSH);
+		btn9.setText("Button9");
+		btn9.setLayoutData(gridData2);
+	}
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+
+		display = new Display();
+		final Shell shell = new Shell(display);
+
+		Initial_Displayer(shell);
+
+		GridData gridData2 = new GridData(GridData.HORIZONTAL_ALIGN_FILL);
+		Initial_Var(shell, gridData2);
 
 		btn1.addSelectionListener(new SelectionAdapter() {
-			@SuppressWarnings("unused")
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				System.out.println("Button 1 Called!");
@@ -106,45 +121,49 @@ public class ADB_Main {
 				tx1.setText(btn1.getText() + "\n" + path);
 
 				// final String commandString = "cmd /c adb devices";
-				final String commandString = ".\\platform-tools\\adb.exe devices";
-				// final String commandString = "ping 8.8.8.8";
+				final String commandString = ".\\platform-tools\\adb.exe devices -l";
 
 				try {
-					String listString = null;
-
-					Process process = Runtime.getRuntime().exec(commandString);
-
-					InputStream istream = process.getInputStream();
-
-					BufferedReader iReader = new BufferedReader(
-							new InputStreamReader(istream));
-
-					String input = iReader.readLine();
-
-					for (int i = 0; input != null; i++, input = iReader
-							.readLine()) {
-						// 若需執行結果可將input傳出
-						System.out.println(input);
-						if (listString != null) {
-							listString = listString + "\n" + input;
-						} else {
-							listString = input;
-						}
-					}
-					if (listString != null) {
-						tx1.setText(listString);
-					} else {
-						tx1.setText("String Null... ");
-					}
-
-				} catch (IOException e1) {
+					new ProcessExecutor(commandString, tx1, "String Null... ");
+				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
+
+				// try {
+				// String listString = null;
+				//
+				// Process process = Runtime.getRuntime().exec(commandString);
+				//
+				// InputStream istream = process.getInputStream();
+				//
+				// BufferedReader iReader = new BufferedReader(
+				// new InputStreamReader(istream));
+				//
+				// String input = iReader.readLine();
+				//
+				// for (int i = 0; input != null; i++, input = iReader
+				// .readLine()) {
+				// // 若需執行結果可將input傳出
+				// System.out.println(input);
+				// if (listString != null) {
+				// listString = listString + "\n" + input;
+				// } else {
+				// listString = input;
+				// }
+				// }
+				// if (listString != null) {
+				// tx1.setText(listString);
+				// } else {
+				// tx1.setText("String Null... ");
+				// }
+				//
+				// } catch (IOException e1) {
+				// e1.printStackTrace();
+				// }
 			}
 		});
 
 		btn2.addSelectionListener(new SelectionAdapter() {
-			@SuppressWarnings("unused")
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				System.out.println("Button 2 Called!");
@@ -154,6 +173,10 @@ public class ADB_Main {
 
 				// String path = FileOpem(shell);
 				String path = fd.FileOpem();
+				if (path == null) {
+					tx1.setText("None File... ");
+					return;
+				}
 				tx1.setText(tx1.getText() + "\n" + path);
 
 				final String commandString;
@@ -169,42 +192,47 @@ public class ADB_Main {
 				System.out.println(commandString);
 
 				try {
-					String listString = null;
-
-					Process process = Runtime.getRuntime().exec(commandString);
-
-					InputStream istream = process.getInputStream();
-
-					BufferedReader iReader = new BufferedReader(
-							new InputStreamReader(istream));
-
-					String input = iReader.readLine();
-
-					for (int i = 0; input != null; i++, input = iReader
-							.readLine()) {
-						// 若需執行結果可將input傳出
-						System.out.println(input);
-						if (listString != null) {
-							listString = listString + "\n" + input;
-						} else {
-							listString = input;
-						}
-					}
-					if (listString != null) {
-						tx1.setText(listString);
-					} else {
-						tx1.setText("None File... ");
-					}
-
-				} catch (IOException e1) {
+					new ProcessExecutor(commandString, tx1, "None File... ");
+				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
+
+				// try {
+				// String listString = null;
+				//
+				// Process process = Runtime.getRuntime().exec(commandString);
+				//
+				// InputStream istream = process.getInputStream();
+				//
+				// BufferedReader iReader = new BufferedReader(
+				// new InputStreamReader(istream));
+				//
+				// String input = iReader.readLine();
+				//
+				// for (int i = 0; input != null; i++, input = iReader
+				// .readLine()) {
+				// // 若需執行結果可將input傳出
+				// System.out.println(input);
+				// if (listString != null) {
+				// listString = listString + "\n" + input;
+				// } else {
+				// listString = input;
+				// }
+				// }
+				// if (listString != null) {
+				// tx1.setText(listString);
+				// } else {
+				// tx1.setText("None File... ");
+				// }
+				//
+				// } catch (IOException e1) {
+				// e1.printStackTrace();
+				// }
 
 			}
 		});
 
 		btn3.addSelectionListener(new SelectionAdapter() {
-			@SuppressWarnings("unused")
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				System.out.println("Button 3 Called!");
@@ -227,37 +255,43 @@ public class ADB_Main {
 				System.out.println(commandString);
 
 				try {
-					String listString = null;
-
-					Process process = Runtime.getRuntime().exec(commandString);
-
-					InputStream istream = process.getInputStream();
-
-					BufferedReader iReader = new BufferedReader(
-							new InputStreamReader(istream));
-
-					String input = iReader.readLine();
-
-					for (int i = 0; input != null; i++, input = iReader
-							.readLine()) {
-						// 若需執行結果可將input傳出
-						System.out.println(input);
-						if (listString != null) {
-							listString = listString + "\n"
-									+ input.replace("package:", "");
-						} else {
-							listString = input.replace("package:", "");
-						}
-					}
-					if (listString != null) {
-						tx1.setText(listString);
-					} else {
-						tx1.setText("String Null... ");
-					}
-
-				} catch (IOException e1) {
+					new ProcessExecutor(commandString, tx1, "String Null... ");
+				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
+
+				// try {
+				// String listString = null;
+				//
+				// Process process = Runtime.getRuntime().exec(commandString);
+				//
+				// InputStream istream = process.getInputStream();
+				//
+				// BufferedReader iReader = new BufferedReader(
+				// new InputStreamReader(istream));
+				//
+				// String input = iReader.readLine();
+				//
+				// for (int i = 0; input != null; i++, input = iReader
+				// .readLine()) {
+				// // 若需執行結果可將input傳出
+				// System.out.println(input);
+				// if (listString != null) {
+				// listString = listString + "\n"
+				// + input.replace("package:", "");
+				// } else {
+				// listString = input.replace("package:", "");
+				// }
+				// }
+				// if (listString != null) {
+				// tx1.setText(listString);
+				// } else {
+				// tx1.setText("String Null... ");
+				// }
+				//
+				// } catch (IOException e1) {
+				// e1.printStackTrace();
+				// }
 			}
 		});
 
@@ -274,17 +308,17 @@ public class ADB_Main {
 					stremulator = null;
 					return;
 				} else {
-					stremulator = "-s " + stremulator;
+					// stremulator = "-s " + stremulator.replace(":", "-");
+					stremulator = "-s " + stremulator + " ";
 				}
 
 				System.out.println(stremulator);
-				tx1.setText(stremulator + " is be Select!");
+				tx1.setText(stremulator + "is be Select!");
 
 			}
 		});
 
 		btn5.addSelectionListener(new SelectionAdapter() {
-			@SuppressWarnings("unused")
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				System.out.println("Button 5 Called!");
@@ -308,83 +342,109 @@ public class ADB_Main {
 							+ "shell pm path " + apkpath;
 				}
 
+				System.out.println(commandString);
+
 				try {
-					String listString = null;
-
-					Process process = Runtime.getRuntime().exec(commandString);
-
-					InputStream istream = process.getInputStream();
-
-					BufferedReader iReader = new BufferedReader(
-							new InputStreamReader(istream));
-
-					String input = iReader.readLine();
-
-					for (int i = 0; input != null; i++, input = iReader
-							.readLine()) {
-						// 若需執行結果可將input傳出
-						System.out.println(input);
-						if (listString != null) {
-							listString = listString + "\n"
-									+ input.replace("package:", "");
-						} else {
-							listString = input.replace("package:", "");
-						}
-					}
-					if (listString != null) {
-						tx1.setText(listString);
-
-						// adb pull /data/app/com.example.someapp-2.apk
-						// path/to/desired/destination
-						final String commandString2;
-
-						if (stremulator != null) {
-							commandString2 = ".\\platform-tools\\adb.exe "
-									+ stremulator + "pull " + listString;
-						} else {
-							commandString2 = ".\\platform-tools\\adb.exe "
-									+ "pull " + listString;
-						}
-
-						listString = null;
-
-						process = Runtime.getRuntime().exec(commandString2);
-
-						istream = process.getInputStream();
-
-						iReader = new BufferedReader(new InputStreamReader(
-								istream));
-
-						input = iReader.readLine();
-
-						for (int i = 0; input != null; i++, input = iReader
-								.readLine()) {
-							// 若需執行結果可將input傳出
-							System.out.println(input);
-							if (listString != null) {
-								listString = listString + "\n" + input;
-							} else {
-								listString = input;
-							}
-						}
-						if (listString != null) {
-							tx1.setText(listString);
-						} else {
-							tx1.setText("Please check whether the file directory has been copied apk ...!");
-						}
-
-					} else {
-						tx1.setText("String Null... ");
-					}
-
-				} catch (IOException e1) {
+					new ProcessExecutor(commandString, tx1, "String Null... ");
+				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
+
+				final String commandString2;
+				String listString = ProcessExecutor.getListString();
+
+				if (stremulator != null) {
+					commandString2 = ".\\platform-tools\\adb.exe "
+							+ stremulator + "pull " + listString;
+				} else {
+					commandString2 = ".\\platform-tools\\adb.exe " + "pull "
+							+ listString;
+				}
+
+				System.out.println(commandString2);
+
+				try {
+					new ProcessExecutor(commandString2, tx1, "String Null... ");
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+
+				// try {
+				// String listString = null;
+				//
+				// Process process = Runtime.getRuntime().exec(commandString);
+				//
+				// InputStream istream = process.getInputStream();
+				//
+				// BufferedReader iReader = new BufferedReader(
+				// new InputStreamReader(istream));
+				//
+				// String input = iReader.readLine();
+				//
+				// for (int i = 0; input != null; i++, input = iReader
+				// .readLine()) {
+				// // 若需執行結果可將input傳出
+				// System.out.println(input);
+				// if (listString != null) {
+				// listString = listString + "\n"
+				// + input.replace("package:", "");
+				// } else {
+				// listString = input.replace("package:", "");
+				// }
+				// }
+				// if (listString != null) {
+				// tx1.setText(listString);
+				//
+				// // adb pull /data/app/com.example.someapp-2.apk
+				// // path/to/desired/destination
+				// final String commandString2;
+				//
+				// if (stremulator != null) {
+				// commandString2 = ".\\platform-tools\\adb.exe "
+				// + stremulator + "pull " + listString;
+				// } else {
+				// commandString2 = ".\\platform-tools\\adb.exe "
+				// + "pull " + listString;
+				// }
+				//
+				// listString = null;
+				//
+				// process = Runtime.getRuntime().exec(commandString2);
+				//
+				// istream = process.getInputStream();
+				//
+				// iReader = new BufferedReader(new InputStreamReader(
+				// istream));
+				//
+				// input = iReader.readLine();
+				//
+				// for (int i = 0; input != null; i++, input = iReader
+				// .readLine()) {
+				// // 若需執行結果可將input傳出
+				// System.out.println(input);
+				// if (listString != null) {
+				// listString = listString + "\n" + input;
+				// } else {
+				// listString = input;
+				// }
+				// }
+				// if (listString != null) {
+				// tx1.setText(listString);
+				// } else {
+				// tx1.setText("Please check whether the file directory has been copied apk ...!");
+				// }
+				//
+				// } else {
+				// tx1.setText("String Null... ");
+				// }
+				//
+				// } catch (IOException e1) {
+				// e1.printStackTrace();
+				// }
 			}
 		});
 
 		btn6.addSelectionListener(new SelectionAdapter() {
-			@SuppressWarnings("unused")
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				System.out.println("Button 6 Called!");
@@ -412,44 +472,74 @@ public class ADB_Main {
 				System.out.println(commandString);
 
 				try {
-					String listString = null;
-
-					Process process = Runtime.getRuntime().exec(commandString);
-
-					InputStream istream = process.getInputStream();
-
-					BufferedReader iReader = new BufferedReader(
-							new InputStreamReader(istream));
-
-					String input = iReader.readLine();
-
-					for (int i = 0; input != null; i++, input = iReader
-							.readLine()) {
-						// 若需執行結果可將input傳出
-						System.out.println(input);
-						if (listString != null) {
-							listString = listString + "\n" + input;
-						} else {
-							listString = input;
-						}
-					}
-					if (listString != null) {
-						tx1.setText(listString);
-					} else {
-						tx1.setText("String Null... ");
-					}
-
-				} catch (IOException e1) {
+					new ProcessExecutor(commandString, tx1, "String Null... ");
+				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
+
+				// try {
+				// String listString = null;
+				//
+				// Process process = Runtime.getRuntime().exec(commandString);
+				//
+				// InputStream istream = process.getInputStream();
+				//
+				// BufferedReader iReader = new BufferedReader(
+				// new InputStreamReader(istream));
+				//
+				// String input = iReader.readLine();
+				//
+				// for (int i = 0; input != null; i++, input = iReader
+				// .readLine()) {
+				// // 若需執行結果可將input傳出
+				// System.out.println(input);
+				// if (listString != null) {
+				// listString = listString + "\n" + input;
+				// } else {
+				// listString = input;
+				// }
+				// }
+				// if (listString != null) {
+				// tx1.setText(listString);
+				// } else {
+				// tx1.setText("String Null... ");
+				// }
+				//
+				// } catch (IOException e1) {
+				// e1.printStackTrace();
+				// }
 			}
 		});
 
-		Control[] controls = new Control[] { btn1, btn2, btn3 };
+		btn7.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				System.out.println("Button 7 Called!");
+				tx1.setText(btn4.getText() + " Called!");
+			}
+		});
+
+		btn8.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				System.out.println("Button 8 Called!");
+				tx1.setText(btn4.getText() + " Called!");
+			}
+		});
+
+		btn9.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				System.out.println("Button 9 Called!");
+				tx1.setText(btn4.getText() + " Called!");
+			}
+		});
+
+		Control[] controls = new Control[] { btn1, btn2, btn3, btn4, btn5,
+				btn6, btn7, btn8, btn9 };
 		shell.setTabList(controls);
 
 		// shell.pack(); // 佈局重新計算大小重設
-
 		shell.open();
 
 		// run the event loop as long as the window is open

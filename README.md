@@ -49,6 +49,13 @@ Downloads:
 <p><img alt="" src="10.png" width="233" height="171"></p>
 <p>在檔案目錄底下已經有了剛剛選取得的 apk 了! </p>
 
+<p><img alt="" src="11.png" width="800" height="600"></p>
+<p>選擇裝置之前先要把裝置給列出來</p>
+<p><img alt="" src="12.png" width="800" height="600"></p>
+<p>用滑鼠把裝置明稱選取後點 &quot;ADB Select Device&quot;</p>
+<p><img alt="" src="13.png" width="800" height="600"></p>
+<p>執行後畫面會出現裝置已經被選取，就可以執行其他各項功能操作</p>
+
 
 
               

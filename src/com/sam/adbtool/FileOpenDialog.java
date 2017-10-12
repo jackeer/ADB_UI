@@ -32,7 +32,7 @@ public class FileOpenDialog extends Dialog {
 		// return super.createDialogArea(parent);
 		Composite container = (Composite) super.createDialogArea(parent);
 
-		final Text tx2 = new Text(container, SWT.SINGLE);
+		final Text tx2 = new Text(container, SWT.SINGLE | SWT.BORDER);
 		tx2.setText("1234    ");
 
 		Button button = new Button(container, SWT.PUSH);
@@ -43,15 +43,17 @@ public class FileOpenDialog extends Dialog {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				System.out.println("Pressed");
-				String str_port = tx2.getText();
+				String str_port = tx2.getText().trim();
 
-				String regex = "[0-9]+"; // 匹配email的正則
+				String regex = "^([0-9]{4})$"; // 匹配 port 的正則
 				Pattern p = Pattern.compile(regex);
 				Matcher m = p.matcher(str_port);
 
 				if (m.find()) {
-					System.out.println(m.group()); // 獲得匹配的email
+					System.out.println(m.group()); // 獲得匹配的 port
 				} else {
+					tx1.setText("Port Format Error!! \n");
+					tx1.append("RANG: xxxx");
 					return;
 				}
 
@@ -94,7 +96,7 @@ public class FileOpenDialog extends Dialog {
 	@Override
 	protected Point getInitialSize() {
 		// return super.getInitialSize();
-		return new Point(220, 130);
+		return new Point(220, 140);
 	}
 
 	String FileOpem() {

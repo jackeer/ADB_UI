@@ -13,6 +13,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.SWTResourceManager;
 
+
 public class ADB_Main {
 
 	private static Display display;
@@ -545,7 +546,7 @@ public class ADB_Main {
 			public void widgetSelected(SelectionEvent e) {
 				System.out.println("Button 9 Called!");
 				tx1.setText(btn4.getText() + " Called!");
-				
+
 				DisConnectDialog dcd = new DisConnectDialog(shell);
 
 				DisConnectDialog.setTx1(tx1);

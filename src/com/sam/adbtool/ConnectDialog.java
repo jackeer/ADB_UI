@@ -28,8 +28,8 @@ public class ConnectDialog extends Dialog {
 		// return super.createDialogArea(parent);
 		Composite container = (Composite) super.createDialogArea(parent);
 
-		final Text tx2 = new Text(container, SWT.SINGLE);
-		tx2.setText("192.168.0.1:1234");
+		final Text tx2 = new Text(container, SWT.SINGLE | SWT.BORDER);
+		tx2.setText("192.168.0.1:1234      ");
 
 		Button button = new Button(container, SWT.PUSH);
 		button.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false,
@@ -39,15 +39,20 @@ public class ConnectDialog extends Dialog {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				System.out.println("Pressed");
-				String str_ip = tx2.getText();
+				String str_ip = tx2.getText().trim();
 
-				String regex = "[0-9]+.[0-9]+.[0-9]+"; // 匹配email的正則
+				// 匹配 IP 的正則
+				String regex = "^([01]?\\d\\d?\\.[01]?\\d\\d?\\."
+						+ "[01]?\\d\\d?\\.[01]?\\d\\d?\\:([0-9]{4}))$";
+
 				Pattern p = Pattern.compile(regex);
 				Matcher m = p.matcher(str_ip);
 
 				if (m.find()) {
-					System.out.println(m.group()); // 獲得匹配的email
+					System.out.println(m.group()); // 獲得匹配的 IP
 				} else {
+					tx1.setText("IP:Port Format Error!! \n");
+					tx1.append("RANG: 255.255.255.255:xxxx");
 					return;
 				}
 
@@ -90,7 +95,7 @@ public class ConnectDialog extends Dialog {
 	@Override
 	protected Point getInitialSize() {
 		// return super.getInitialSize();
-		return new Point(220, 130);
+		return new Point(220, 140);
 	}
 
 	public static Text getTx1() {

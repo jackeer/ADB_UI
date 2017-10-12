@@ -162,23 +162,23 @@ public class SWTResourceManager {
 	}
 
 	public static void disposeImages() {
-		for (Image image : m_imageMap.values()) {
-			image.dispose();
-		}
-		m_imageMap.clear();
-
-		for (int i = 0; i < m_decoratedImageMap.length; i++) {
-			Map cornerDecoratedImageMap = m_decoratedImageMap[i];
-			if (cornerDecoratedImageMap != null) {
-				for (Map decoratedMap : cornerDecoratedImageMap.values()) {
-					for (Image image : decoratedMap.values()) {
-						image.dispose();
-					}
-					decoratedMap.clear();
-				}
-				cornerDecoratedImageMap.clear();
-			}
-		}
+//		for (Image image : m_imageMap.values()) {
+//			image.dispose();
+//		}
+//		m_imageMap.clear();
+//
+//		for (int i = 0; i < m_decoratedImageMap.length; i++) {
+//			Map cornerDecoratedImageMap = m_decoratedImageMap[i];
+//			if (cornerDecoratedImageMap != null) {
+//				for (Map decoratedMap : cornerDecoratedImageMap.values()) {
+//					for (Image image : decoratedMap.values()) {
+//						image.dispose();
+//					}
+//					decoratedMap.clear();
+//				}
+//				cornerDecoratedImageMap.clear();
+//			}
+//		}
 	}
 
 	public static Font getFont(String name, int height, int style) {

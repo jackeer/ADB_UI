@@ -29,7 +29,7 @@ public class ADB_Main {
 	private static Button btn8;
 	private static Button btn9;
 
-	static String stremulator = null;
+	private static String stremulator = null;
 
 	// private static String str_args = "";
 
@@ -88,13 +88,13 @@ public class ADB_Main {
 		btn6.setText("ADB Delete APP");
 		btn6.setLayoutData(gridData2);
 		btn7 = new Button(shell, SWT.PUSH);
-		btn7.setText("Button7");
+		btn7.setText("ADB Tcpip Port");
 		btn7.setLayoutData(gridData2);
 		btn8 = new Button(shell, SWT.PUSH);
-		btn8.setText("Button8");
+		btn8.setText("ADB Connect Tcpip");
 		btn8.setLayoutData(gridData2);
 		btn9 = new Button(shell, SWT.PUSH);
-		btn9.setText("Button9");
+		btn9.setText("ADB DisConnect Tcpip");
 		btn9.setLayoutData(gridData2);
 	}
 
@@ -183,9 +183,9 @@ public class ADB_Main {
 
 				final String commandString;
 
-				if (stremulator != null) {
-					commandString = ".\\platform-tools\\adb.exe " + stremulator
-							+ "install " + path;
+				if (getStremulator() != null) {
+					commandString = ".\\platform-tools\\adb.exe "
+							+ getStremulator() + "install " + path;
 				} else {
 					commandString = ".\\platform-tools\\adb.exe " + "install "
 							+ path;
@@ -246,9 +246,10 @@ public class ADB_Main {
 
 				final String commandString;
 
-				if (stremulator != null) {
-					commandString = ".\\platform-tools\\adb.exe " + stremulator
-							+ "shell pm list packages " + strfiler;
+				if (getStremulator() != null) {
+					commandString = ".\\platform-tools\\adb.exe "
+							+ getStremulator() + "shell pm list packages "
+							+ strfiler;
 				} else {
 					commandString = ".\\platform-tools\\adb.exe "
 							+ "shell pm list packages " + strfiler;
@@ -303,19 +304,19 @@ public class ADB_Main {
 				System.out.println("Button 4 Called!");
 				// tx1.setText(btn4.getText() + " Called!");
 
-				stremulator = tx1.getSelectionText();
+				setStremulator(tx1.getSelectionText());
 
-				if (stremulator == "") {
+				if (getStremulator() == "") {
 					tx1.setText("None Select Device!!");
-					stremulator = null;
+					setStremulator(null);
 					return;
 				} else {
 					// stremulator = "-s " + stremulator.replace(":", "-");
-					stremulator = "-s " + stremulator + " ";
+					setStremulator("-s " + getStremulator() + " ");
 				}
 
-				System.out.println(stremulator);
-				tx1.setText(stremulator + "is be Select!");
+				System.out.println(getStremulator());
+				tx1.setText(getStremulator() + "is be Select!");
 
 			}
 		});
@@ -336,9 +337,9 @@ public class ADB_Main {
 				// adb shell pm path com.example.someapp
 				final String commandString;
 
-				if (stremulator != null) {
-					commandString = ".\\platform-tools\\adb.exe " + stremulator
-							+ "shell pm path " + apkpath;
+				if (getStremulator() != null) {
+					commandString = ".\\platform-tools\\adb.exe "
+							+ getStremulator() + "shell pm path " + apkpath;
 				} else {
 					commandString = ".\\platform-tools\\adb.exe "
 							+ "shell pm path " + apkpath;
@@ -355,9 +356,9 @@ public class ADB_Main {
 				final String commandString2;
 				String listString = ProcessExecutor.getListString();
 
-				if (stremulator != null) {
+				if (getStremulator() != null) {
 					commandString2 = ".\\platform-tools\\adb.exe "
-							+ stremulator + "pull " + listString;
+							+ getStremulator() + "pull " + listString;
 				} else {
 					commandString2 = ".\\platform-tools\\adb.exe " + "pull "
 							+ listString;
@@ -463,9 +464,9 @@ public class ADB_Main {
 
 				final String commandString;
 
-				if (stremulator != null) {
-					commandString = ".\\platform-tools\\adb.exe " + stremulator
-							+ "uninstall " + apkpackage;
+				if (getStremulator() != null) {
+					commandString = ".\\platform-tools\\adb.exe "
+							+ getStremulator() + "uninstall " + apkpackage;
 				} else {
 					commandString = ".\\platform-tools\\adb.exe "
 							+ "uninstall " + apkpackage;
@@ -518,6 +519,11 @@ public class ADB_Main {
 			public void widgetSelected(SelectionEvent e) {
 				System.out.println("Button 7 Called!");
 				tx1.setText(btn4.getText() + " Called!");
+
+				FileOpenDialog fd = new FileOpenDialog(shell);
+
+				FileOpenDialog.setTx1(tx1);
+				fd.open();
 			}
 		});
 
@@ -526,6 +532,11 @@ public class ADB_Main {
 			public void widgetSelected(SelectionEvent e) {
 				System.out.println("Button 8 Called!");
 				tx1.setText(btn4.getText() + " Called!");
+
+				ConnectDialog cd = new ConnectDialog(shell);
+
+				ConnectDialog.setTx1(tx1);
+				cd.open();
 			}
 		});
 
@@ -534,6 +545,11 @@ public class ADB_Main {
 			public void widgetSelected(SelectionEvent e) {
 				System.out.println("Button 9 Called!");
 				tx1.setText(btn4.getText() + " Called!");
+				
+				DisConnectDialog dcd = new DisConnectDialog(shell);
+
+				DisConnectDialog.setTx1(tx1);
+				dcd.open();
 			}
 		});
 
@@ -556,5 +572,13 @@ public class ADB_Main {
 		}
 		// disposes all associated windows and their components
 		display.dispose();
+	}
+
+	public static String getStremulator() {
+		return stremulator;
+	}
+
+	public static void setStremulator(String stremulator) {
+		ADB_Main.stremulator = stremulator;
 	}
 }

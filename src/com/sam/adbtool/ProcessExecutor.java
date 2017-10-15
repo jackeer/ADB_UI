@@ -71,9 +71,9 @@ public class ProcessExecutor {
 				}
 			}
 			if (getListString() != null) {
-				tx1.setText(getListString());
+				tx1.append(getListString() + "\n");
 			} else {
-				tx1.setText(errmsg);
+				tx1.append(errmsg + "\n");
 			}
 
 		} catch (IOException e) {

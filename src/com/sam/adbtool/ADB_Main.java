@@ -13,7 +13,6 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.SWTResourceManager;
 
-
 public class ADB_Main {
 
 	private static Display display;
@@ -48,7 +47,7 @@ public class ADB_Main {
 	}
 
 	static void Initial_Displayer(Shell shell) {
-		shell.setText("ADB Test Tool");
+		shell.setText("ADB Tool ");
 
 		GridLayout gridLayout = new GridLayout();
 		gridLayout.numColumns = 3;
@@ -58,7 +57,7 @@ public class ADB_Main {
 		shell.setSize(800, 600);
 
 		tx1 = new Text(shell, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
-		tx1.setText("This ADB Tool");
+		tx1.setText("This ADB Tool \n");
 		tx1.setFont(SWTResourceManager.getFont("微軟正黑體", 10, 0));
 		GridData gridData = new GridData(GridData.HORIZONTAL_ALIGN_FILL);
 		gridData.horizontalAlignment = SWT.CENTER;
@@ -116,14 +115,14 @@ public class ADB_Main {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				System.out.println("Button 1 Called!");
-				tx1.setText(btn1.getText() + " Called!");
+				// tx1.setText(btn1.getText() + " Called!");
 
-				String path = System.getProperty("user.dir")
-						+ "\\platform-tools\\";
-				System.out.println(path);
-				tx1.setText(btn1.getText() + "\n" + path);
+				// String path = System.getProperty("user.dir")
+				// + "\\platform-tools\\";
+				// System.out.println(path);
+				// tx1.setText(btn1.getText() + "\n" + path);
 
-				// final String commandString = "cmd /c adb devices";
+				// final String commandString = "adb devices";
 				final String commandString = ".\\platform-tools\\adb.exe devices -l";
 
 				try {
@@ -170,17 +169,14 @@ public class ADB_Main {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				System.out.println("Button 2 Called!");
-				tx1.setText(btn2.getText() + " Called!");
+				// tx1.setText(btn2.getText() + " Called!");
 
-				FileOpenDialog fd = new FileOpenDialog(shell);
-
-				// String path = FileOpem(shell);
-				String path = fd.FileOpem();
+				String path = FileOpem(shell);
 				if (path == null) {
-					tx1.setText("None File... ");
+					tx1.append("None File... \n");
 					return;
 				}
-				tx1.setText(tx1.getText() + "\n" + path);
+				tx1.append(path + "\n");
 
 				final String commandString;
 
@@ -195,7 +191,7 @@ public class ADB_Main {
 				System.out.println(commandString);
 
 				try {
-					new ProcessExecutor(commandString, tx1, "None File... ");
+					new ProcessExecutor(commandString, tx1, "None File... \n");
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
@@ -242,8 +238,9 @@ public class ADB_Main {
 				// tx1.setText(btn3.getText() + " Called!");
 
 				String strfiler = tx1.getSelectionText();
-
 				System.out.println(strfiler);
+
+				tx1.setText("");
 
 				final String commandString;
 
@@ -308,7 +305,7 @@ public class ADB_Main {
 				setStremulator(tx1.getSelectionText());
 
 				if (getStremulator() == "") {
-					tx1.setText("None Select Device!!");
+					tx1.append("None Select Device!! \n");
 					setStremulator(null);
 					return;
 				} else {
@@ -317,7 +314,7 @@ public class ADB_Main {
 				}
 
 				System.out.println(getStremulator());
-				tx1.setText(getStremulator() + "is be Select!");
+				tx1.append(getStremulator() + "is be Select!");
 
 			}
 		});
@@ -331,7 +328,7 @@ public class ADB_Main {
 				String apkpath = tx1.getSelectionText();
 
 				if (apkpath == "") {
-					tx1.setText("None Select Apk Package!!");
+					tx1.append("None Select Apk Package!! \n");
 					return;
 				}
 
@@ -457,7 +454,7 @@ public class ADB_Main {
 				String apkpackage = tx1.getSelectionText();
 
 				if (apkpackage == "") {
-					tx1.setText("None Select Apk Package!!");
+					tx1.append("None Select Apk Package!! \n");
 					return;
 				}
 
@@ -519,11 +516,11 @@ public class ADB_Main {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				System.out.println("Button 7 Called!");
-				tx1.setText(btn4.getText() + " Called!");
+				// tx1.setText(btn4.getText() + " Called!");
 
-				FileOpenDialog fd = new FileOpenDialog(shell);
+				TcpipDialog fd = new TcpipDialog(shell);
 
-				FileOpenDialog.setTx1(tx1);
+				TcpipDialog.setTx1(tx1);
 				fd.open();
 			}
 		});
@@ -532,7 +529,7 @@ public class ADB_Main {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				System.out.println("Button 8 Called!");
-				tx1.setText(btn4.getText() + " Called!");
+				// tx1.setText(btn4.getText() + " Called!");
 
 				ConnectDialog cd = new ConnectDialog(shell);
 
@@ -545,7 +542,7 @@ public class ADB_Main {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				System.out.println("Button 9 Called!");
-				tx1.setText(btn4.getText() + " Called!");
+				// tx1.setText(btn4.getText() + " Called!");
 
 				DisConnectDialog dcd = new DisConnectDialog(shell);
 

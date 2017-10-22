@@ -38,7 +38,7 @@ public class ADB_Main {
 		FileDialog fd = new FileDialog(shell, SWT.OPEN);
 		fd.setText("Open");
 		fd.setFilterPath("./");
-		String[] filterExt = { "*.apk" };
+		String[] filterExt = { "*.apk", "*.*" };
 		fd.setFilterExtensions(filterExt);
 		String selected = fd.open();
 		System.out.println(selected);

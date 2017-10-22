@@ -20,8 +20,8 @@ Build id: 20120216-1857
 
 Downloads:
 <br>
-<a rel="nofollow" href="https://github.com/jackeer/ADB_UI/blob/master/ADB_Install.rar">
-                <strong>ADB_Install.rar</strong>
+<a rel="nofollow" href="https://github.com/jackeer/ADB_UI/blob/master/ADB_UI.rar">
+                <strong>ADB_UI 已編譯好的 jar 檔</strong>
               </a>
 <br><br><br><br><br>
 <p>操作說明</p>
